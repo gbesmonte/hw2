@@ -21,20 +21,35 @@ std::set<std::string> parseStringToWords(string rawWords)
 		return s;
 	}
 
-	for (int i = 0; i < rawWords.length(); i++){
-		if (ispunct(rawWords[i])){
+	int i = 0;
+	while (rawWords.length() > 0){
+		if (i == rawWords.length()){
+			if (rawWords.length() > 1){
+				rawWords = convToLower(rawWords);
+				s.insert(rawWords);
+			}
+			break;
+		}
+		if (ispunct(rawWords[i]) || isspace(rawWords[i])){
 			string kw = rawWords.substr(0,i);
-			rawWords = rawWords.substr(i);
-
+			rawWords = rawWords.substr(i+1);
+			i = 0;
 			if (kw.size() > 1){
 				kw = convToLower(kw);
 				s.insert(kw);
 			}
 		}
+		else{
+			i++;
+		}
 	}
 
 	return s;
 }
+
+
+
+
 
 /**************************************************
  * COMPLETED - You may use the following functions

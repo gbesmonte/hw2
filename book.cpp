@@ -17,6 +17,15 @@ Book::~Book(){
 set<string> Book::keywords() const{
 	set<string> s;
 	s = parseStringToWords(author);
+
+	set<string> s2;
+	s = parseStringToWords(getName());
+
+	s = setUnion(s,s2);
+	/*for (set<string>::iterator it = s.begin(); it != s.end(); ++it){
+		cout << *it << endl;
+	}*/
+	
 	s.insert(ISBN);
 	return s;
 }

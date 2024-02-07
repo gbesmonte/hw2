@@ -16,13 +16,17 @@ Movie::~Movie(){
 
 set<string> Movie::keywords() const{
 	set<string> s;
-	s.insert(genre);
+	s = parseStringToWords(getName());
+
+	string g = convToLower(genre);
+	s.insert(g);
+
 	return s;
 }
 
 string Movie::displayString() const{
 	string s;
-	s = getName() + "\n" + "Genre: " + genre + "Rating: " + rating + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	s = getName() + "\n" + "Genre: " + genre + " Rating: " + rating + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
 	return s;
 }
 
