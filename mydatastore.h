@@ -3,6 +3,8 @@
 #include <string>
 #include <set>
 #include <vector>
+#include <queue>
+#include <map>
 #include "product.h"
 #include "user.h"
 #include "datastore.h"
@@ -28,12 +30,13 @@ public:
      */
     void dump(std::ostream& ofile);
 
-		void viewcart(User* u);
-		void buycart(User* u);
+		void viewcart(std::string username);
+		void buycart(std::string username);
 		void quit(std::string filename);
 private:
 		std::queue<Product*> cart;
 		std::vector<User*> users;
+		std::map<std::string, std::set<Product*>> lemap;
 };
 
 #endif

@@ -28,7 +28,12 @@ string Book::displayString() const{
 }
 
 void Book::dump(std::ostream& os) const{
-	os << displayString();
+	os << "book" << endl;
+	os << getName() << endl;
+	os << to_string(getPrice()) << endl;
+	os << to_string(getQty()) << endl;
+	os << ISBN << endl;
+	os << author << endl;
 }
 
 

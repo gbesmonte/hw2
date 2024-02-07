@@ -30,7 +30,7 @@ std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)
 	for (it = s1.begin(); it != s1.end(); ++it){
 		bool found = false;
 		if (s2.find(*it) != s2.end()){
-			bool found = true;
+			found = true;
 		}
 		if (!found){
 			s3.insert(*it);

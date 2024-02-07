@@ -17,7 +17,7 @@ std::set<std::string> parseStringToWords(string rawWords)
 {
 	set<string> s;
 
-	if (rawWords <= 1){
+	if (rawWords.size() <= 1){
 		return s;
 	}
 
@@ -26,7 +26,7 @@ std::set<std::string> parseStringToWords(string rawWords)
 			string kw = rawWords.substr(0,i);
 			rawWords = rawWords.substr(i);
 
-			if (sw > 1){
+			if (kw.size() > 1){
 				kw = convToLower(kw);
 				s.insert(kw);
 			}
