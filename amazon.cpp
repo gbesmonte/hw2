@@ -113,21 +113,19 @@ int main(int argc, char* argv[])
             }
             else if (cmd == "ADD"){
                 string username;
-                string hri;
+                int hri;
                 ss >> username;
                 ss >> hri;
-                stoi(hri);
-                ds.addProduct(hits[0]); //TEMP FIX
+                ds.addtocart(hits[hri-1], username);
             }
-
-
-
             else {
                 cout << "Unknown command" << endl;
             }
         }
 
     }
+
+
     return 0;
 }
 

@@ -9,6 +9,16 @@
 #include "user.h"
 #include "datastore.h"
 
+class Cart {
+public:
+		Cart(User* u);
+		void addCart(Product* p);
+		User* getUser();
+		std::queue<Product*> cart;
+private:
+		User* u;
+
+};
 
 class MyDataStore : public DataStore{
 public:
@@ -32,11 +42,14 @@ public:
 
 		void viewcart(std::string username);
 		void buycart(std::string username);
-		void quit(std::string filename);
+		void addtocart(Product* p, std::string username);
+
 private:
-		std::queue<Product*> cart;
+		std::queue<Product*> products;
 		std::vector<User*> users;
+		std::vector<Cart*> carts;
 		std::map<std::string, std::set<Product*>> lemap;
 };
+
 
 #endif

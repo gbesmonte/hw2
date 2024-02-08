@@ -12,8 +12,8 @@ MyDataStore::MyDataStore(){
 }
 
 void MyDataStore::addProduct(Product* p){
-	//add product to cart
-	cart.push(p);
+	//add product to products
+	products.push(p);
 
 	//access all keywords in product
 	set<string> s = p->keywords();
@@ -91,40 +91,23 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
 
 void MyDataStore::dump(std::ostream& ofile){
 	ofile << "<products>" << endl;
-	queue<Product*> ccart = cart;
-	while (!ccart.empty()){
-		ccart.front()->dump(ofile);
+	queue<Product*> p = products;
+	while (!p.empty()){
+		p.front()->dump(ofile);
+		p.pop();
 	}
 	ofile << "</products>" << endl;
 	ofile << "<users>" << endl;
-	for (size_t i = 0; users.size(); i++){
+	for (size_t i = 0; i < users.size(); i++){
 		users[i]->dump(ofile);
 	}
 	ofile << "</users>" << endl;
 }
 
+//EVERYTHING BELOW THIS LINE NEEDS CART FIXING
+
 void MyDataStore::viewcart(string username){
-	bool found = false;
-	for (size_t i = 0; i < users.size(); i++){
-		if (users[i]->getName() == username){
-			found = true;
-		}
-	}
-	if (!found){
-		cout << "Invalid username!" << endl;
-		return;
-	}
-
-	queue<Product*> ccart = cart;
-	int count = 0;
-	while (!ccart.empty()){
-		cout << count << ":" << ccart.front()->getName() << endl;
-		ccart.pop();
-		count++;
-	}
-}
-
-void MyDataStore::buycart(string username){
+	
 	bool found = false;
 	User* myU;
 	for (size_t i = 0; i < users.size(); i++){
@@ -138,8 +121,49 @@ void MyDataStore::buycart(string username){
 		return;
 	}
 
+	queue<Product*> ccart;
+	for (size_t i = 0; i < carts.size(); i++){
+		if (carts[i]->getUser() == myU){
+				ccart = carts[i]->cart;
+		}
+	}
+
+	int count = 0;
+	while (!ccart.empty()){
+		cout << ccart.front()->displayString() << endl;
+		ccart.pop();
+		count++;
+	}
+}
+
+void MyDataStore::buycart(string username){
+	//find User* corresponding to username
+	bool found = false;
+	User* myU;
+	for (size_t i = 0; i < users.size(); i++){
+		if (users[i]->getName() == username){
+			found = true;
+			myU = users[i];
+		}
+	}
+	if (!found){
+		cout << "Invalid username!" << endl;
+		return;
+	}
 	double balance = myU->getBalance();
-	queue<Product*> ccart = cart;
+	double initialbal = myU->getBalance();
+
+	//find cart that user has
+	int j = 0;
+	queue<Product*> ccart;
+	for (size_t i = 0; i < carts.size(); i++){
+		if (carts[i]->getUser() == myU){
+				ccart = carts[i]->cart;
+				j = i;
+		}
+	}
+
+	//buy the stuff
 	vector<Product*> ptemp; 
 	while (!ccart.empty()){
 		Product* curr = ccart.front();
@@ -153,16 +177,57 @@ void MyDataStore::buycart(string username){
 			ccart.pop();
 		}
 	}
+	
 
-	for (size_t i = ptemp.size(); i <= 0; i--){
+	for (size_t i = ptemp.size() -1; i <= 0; i--){
 		ccart.push(ptemp[i]);
 	}
-	cart = ccart;
+
+	carts[j]->cart = ccart;
+	myU->deductAmount(initialbal - balance);
+}
+
+void MyDataStore::addtocart(Product* p, string username){
+	bool found = false;
+	User* myU;
+	for (size_t i = 0; i < users.size(); i++){
+		if (users[i]->getName() == username){
+			found = true;
+			myU = users[i];
+		}
+	}
+	if (!found){
+		cout << "Invalid username!" << endl;
+		return;
+	}
+	
+	bool found2 = false;
+	Cart* myC = nullptr;
+	for (size_t i = 0; i < carts.size(); i++){
+		if (carts[i]->getUser() == myU){
+				carts[i]->addCart(p);
+				found2=true;
+				cout << "Added to existing cart" << endl;
+		}
+	}
+
+	if (!found2){
+		cout << "Made new cart" << endl;
+		myC = new Cart(myU);
+		myC->addCart(p);
+		carts.push_back(myC);
+	}
 }
 		
-void MyDataStore::quit(std::string filename){
-	ofstream ofile(filename);
-	dump(ofile);
+
+Cart::Cart(User* u){
+	this->u = u;
 }
 
+void Cart::addCart(Product* p){
+	cart.push(p);
+}
 
+User* Cart::getUser(){
+	return u;
+}

@@ -32,6 +32,7 @@ set<string> Book::keywords() const{
 
 string Book::displayString() const{
 	string s;
+	
 	s = getName() + "\n" + "Author: " + author + " ISBN: " + ISBN + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
 	return s;
 }
