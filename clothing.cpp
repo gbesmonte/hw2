@@ -30,14 +30,18 @@ set<string> Clothing::keywords() const{
 
 string Clothing::displayString() const{
 	string s;
-	s = getName() + "\n" + "Size: " + size + " Brand: " + brand + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	stringstream ss;
+	ss << getName() + "\n" + "Size: " + size + " Brand: " + brand + "\n" << fixed << setprecision(2) << getPrice() << " " << getQty() << " left.";
+	//s = getName() + "\n" + "Author: " + author + " ISBN: " + ISBN + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	s = ss.str();
+	//s = getName() + "\n" + "Size: " + size + " Brand: " + brand + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
 	return s;
 }
 
 void Clothing::dump(std::ostream& os) const{
 	os << "clothing" << endl;
 	os << getName() << endl;
-	os << to_string(getPrice()) << endl;
+	os << fixed << setprecision(2) << getPrice() << endl;
 	os << to_string(getQty()) << endl;
 	os << size << endl;
 	os << brand << endl;

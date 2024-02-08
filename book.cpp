@@ -32,15 +32,17 @@ set<string> Book::keywords() const{
 
 string Book::displayString() const{
 	string s;
-	
-	s = getName() + "\n" + "Author: " + author + " ISBN: " + ISBN + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	stringstream ss;
+	ss << getName() + "\n" + "Author: " + author + " ISBN: " + ISBN + "\n" << fixed << setprecision(2) << getPrice() << " " << getQty() << " left.";
+	//s = getName() + "\n" + "Author: " + author + " ISBN: " + ISBN + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	s = ss.str();
 	return s;
 }
 
 void Book::dump(std::ostream& os) const{
 	os << "book" << endl;
 	os << getName() << endl;
-	os << to_string(getPrice()) << endl;
+	os << fixed << setprecision(2) << getPrice() << endl;
 	os << to_string(getQty()) << endl;
 	os << ISBN << endl;
 	os << author << endl;

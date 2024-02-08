@@ -11,6 +11,21 @@ MyDataStore::MyDataStore(){
 
 }
 
+MyDataStore::~MyDataStore(){
+	for (size_t i = 0; i < carts.size(); i++){
+		delete carts[i];
+	}
+
+	for (size_t i = 0; i < users.size(); i++){
+		delete users[i];
+	}
+
+	while (!products.empty()){
+		delete products.front();
+		products.pop();
+	}
+}
+
 void MyDataStore::addProduct(Product* p){
 	//add product to products
 	products.push(p);
@@ -128,8 +143,9 @@ void MyDataStore::viewcart(string username){
 		}
 	}
 
-	int count = 0;
+	int count = 1;
 	while (!ccart.empty()){
+		cout << "Product\t" << count << endl;
 		cout << ccart.front()->displayString() << endl;
 		ccart.pop();
 		count++;
@@ -207,12 +223,12 @@ void MyDataStore::addtocart(Product* p, string username){
 		if (carts[i]->getUser() == myU){
 				carts[i]->addCart(p);
 				found2=true;
-				cout << "Added to existing cart" << endl;
+				//cout << "Added to existing cart" << endl;
 		}
 	}
 
 	if (!found2){
-		cout << "Made new cart" << endl;
+		//cout << "Made new cart" << endl;
 		myC = new Cart(myU);
 		myC->addCart(p);
 		carts.push_back(myC);

@@ -26,14 +26,17 @@ set<string> Movie::keywords() const{
 
 string Movie::displayString() const{
 	string s;
-	s = getName() + "\n" + "Genre: " + genre + " Rating: " + rating + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	//s = getName() + "\n" + "Genre: " + genre + " Rating: " + rating + "\n" + to_string(getPrice()) + " " + to_string(getQty()) + " left.";
+	stringstream ss;
+	ss << getName() + "\n" + "Genre: " + genre + " Rating: " + rating  + "\n" << fixed << setprecision(2) << getPrice() << " " << getQty() << " left.";
+	s = ss.str();
 	return s;
 }
 
 void Movie::dump(std::ostream& os) const{
 	os << "movie" << endl;
 	os << getName() << endl;
-	os << to_string(getPrice()) << endl;
+	os << fixed << setprecision(2) << getPrice() << endl;
 	os << to_string(getQty()) << endl;
 	os << genre << endl;
 	os << rating << endl;
