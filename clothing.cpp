@@ -22,7 +22,7 @@ set<string> Clothing::keywords() const{
 	}*/
 
 	set<string> s2;
-	s = parseStringToWords(getName());
+	s2 = parseStringToWords(getName());
 
 	s = setUnion(s,s2);
 	return s;

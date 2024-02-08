@@ -116,7 +116,12 @@ int main(int argc, char* argv[])
                 int hri;
                 ss >> username;
                 ss >> hri;
-                ds.addtocart(hits[hri-1], username);
+                if (ss.fail()){
+                    cout << "Invalid request";
+                }
+                else{
+                    ds.addtocart(hits[hri-1], username);
+                }
             }
             else {
                 cout << "Unknown command" << endl;

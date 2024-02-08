@@ -213,7 +213,7 @@ void MyDataStore::addtocart(Product* p, string username){
 		}
 	}
 	if (!found){
-		cout << "Invalid username!" << endl;
+		cout << "Invalid request" << endl;
 		return;
 	}
 	

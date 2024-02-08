@@ -19,9 +19,10 @@ set<string> Book::keywords() const{
 	s = parseStringToWords(author);
 
 	set<string> s2;
-	s = parseStringToWords(getName());
+	s2 = parseStringToWords(getName());
 
 	s = setUnion(s,s2);
+	
 	/*for (set<string>::iterator it = s.begin(); it != s.end(); ++it){
 		cout << *it << endl;
 	}*/
